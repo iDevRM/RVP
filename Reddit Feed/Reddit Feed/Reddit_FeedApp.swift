@@ -11,7 +11,7 @@ import SwiftUI
 struct Reddit_FeedApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            FeedView()
         }
     }
 }
