@@ -11,13 +11,8 @@ import SwiftUI
 class NetworkManager {
     
     let baseURL = "https://www.reddit.com/.json"
-    var hasAnchor = false
     
     func fetchData(with urlString: String?, completion: @escaping (Result<[Post], Error>) -> ()) {
-        if urlString != nil {
-            self.hasAnchor = true
-            
-        }
         
         let request = URLRequest(url: checkForAnchor(anchor: urlString))
         
@@ -34,10 +29,9 @@ class NetworkManager {
                     let postData = try decoder.decode(PostData.self, from: safeData)
                     for child in postData.data.children {
                         posts.append(child.data)
-                        print(child.data.imageURL)
                     }
                     completion(.success(posts))
-                               
+                    posts.removeAll()
                 } catch {
                     completion(.failure(error))
                     debugPrint(error.localizedDescription)
@@ -49,6 +43,7 @@ class NetworkManager {
         
     }
     
+
     func checkForAnchor(anchor: String?) -> URL {
         if anchor == nil {
             if let url = URL(string: baseURL) {
@@ -58,7 +53,6 @@ class NetworkManager {
             if let url = URL(string: "\(baseURL)?after=\(anchor!)") {
                 return url
             }
-            
         }
         return URL(string: "")!
     }

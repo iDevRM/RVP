@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 
 struct PostData: Codable {
@@ -21,7 +20,8 @@ struct Child: Codable {
     let data: Post
 }
 
-struct Post: Codable {
+struct Post: Identifiable, Codable {
+    var id = UUID()
     let score: Int
     let imageURL: String
     let title: String
@@ -39,15 +39,4 @@ struct Post: Codable {
     }
     
 }
-extension String {
-    func load() -> UIImage {
-        do {
-            guard let url = URL(string: self) else { return UIImage() }
-            let data = try Data(contentsOf: url)
-            return UIImage(data: data) ?? UIImage()
-        } catch {
-            print("Could not get image")
-        }
-        return UIImage()
-    }
-}
+

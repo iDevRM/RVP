@@ -12,8 +12,11 @@ import SwiftUI
 class FeedViewModel: ObservableObject {
     
     @Published var feedPosts = [Post]()
-    
     private let networkManager = NetworkManager()
+    
+    init() {
+        getPosts()
+    }
     
     func getPosts() {
         networkManager.fetchData(with: nil) { result in
@@ -26,6 +29,17 @@ class FeedViewModel: ObservableObject {
                 debugPrint(error.localizedDescription)
             }
         }
+    }
+    
+    func shouldLoadMorePosts(_ post: Post ) -> Bool  {
+        if let lastID = feedPosts.last?.id {
+            if post.id == lastID {
+                return true
+            } else {
+                return false
+            }
+        }
+        return false
     }
     
     func getPostsAfterAnchor(anchor: String) {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D3A06E026EA713900980C8C /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3A06DF26EA713900980C8C /* PostView.swift */; };
+		1D3A06E326EA71EB00980C8C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3A06E226EA71EB00980C8C /* Extensions.swift */; };
 		1DE7478B26E7DD93001BF233 /* Reddit_FeedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE7478A26E7DD93001BF233 /* Reddit_FeedApp.swift */; };
 		1DE7478D26E7DD93001BF233 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE7478C26E7DD93001BF233 /* FeedView.swift */; };
 		1DE7478F26E7DD94001BF233 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DE7478E26E7DD94001BF233 /* Assets.xcassets */; };
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D3A06DF26EA713900980C8C /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
+		1D3A06E226EA71EB00980C8C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		1DE7478726E7DD93001BF233 /* Reddit Feed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reddit Feed.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DE7478A26E7DD93001BF233 /* Reddit_FeedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reddit_FeedApp.swift; sourceTree = "<group>"; };
 		1DE7478C26E7DD93001BF233 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
@@ -78,6 +82,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D3A06DE26EA712300980C8C /* PostView */ = {
+			isa = PBXGroup;
+			children = (
+				1D3A06DF26EA713900980C8C /* PostView.swift */,
+			);
+			path = PostView;
+			sourceTree = "<group>";
+		};
+		1D3A06E126EA71CC00980C8C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1D3A06E226EA71EB00980C8C /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		1DE7477E26E7DD93001BF233 = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +162,7 @@
 			children = (
 				1DE747B926E7EADF001BF233 /* Post.swift */,
 				1DE747BE26E82776001BF233 /* NetworkManager.swift */,
+				1D3A06E126EA71CC00980C8C /* Extensions */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -149,6 +170,7 @@
 		1DE747B626E7DFF5001BF233 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1D3A06DE26EA712300980C8C /* PostView */,
 				1DE747BD26E818E1001BF233 /* FeedView */,
 			);
 			path = View;
@@ -304,7 +326,9 @@
 				1DE7478D26E7DD93001BF233 /* FeedView.swift in Sources */,
 				1DE747BF26E82776001BF233 /* NetworkManager.swift in Sources */,
 				1DE747BC26E7EB13001BF233 /* FeedViewModel.swift in Sources */,
+				1D3A06E026EA713900980C8C /* PostView.swift in Sources */,
 				1DE7478B26E7DD93001BF233 /* Reddit_FeedApp.swift in Sources */,
+				1D3A06E326EA71EB00980C8C /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
