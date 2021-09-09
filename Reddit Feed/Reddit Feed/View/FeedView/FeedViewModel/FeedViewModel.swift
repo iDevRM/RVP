@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+
 class FeedViewModel: ObservableObject {
     
     @Published var feedPosts = [Post]()
@@ -15,11 +16,24 @@ class FeedViewModel: ObservableObject {
     private let networkManager = NetworkManager()
     
     func getPosts() {
-        networkManager.fetchData { result in
+        networkManager.fetchData(with: nil) { result in
             switch result {
             case .success(let posts):
                 DispatchQueue.main.async {
                     self.feedPosts = posts
+                }
+            case .failure(let error):
+                debugPrint(error.localizedDescription)
+            }
+        }
+    }
+    
+    func getPostsAfterAnchor(anchor: String) {
+        networkManager.fetchData(with: anchor) { result in
+            switch result {
+            case .success(let posts):
+                DispatchQueue.main.async {
+                    self.feedPosts += posts
                 }
             case .failure(let error):
                 debugPrint(error.localizedDescription)

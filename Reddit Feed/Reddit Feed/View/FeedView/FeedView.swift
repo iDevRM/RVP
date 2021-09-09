@@ -10,27 +10,42 @@ import SwiftUI
 struct FeedView: View {
     @ObservedObject var viewModel = FeedViewModel()
     var body: some View {
-        List {
-            ForEach(viewModel.feedPosts.indices, id: \.self) { index in
-                PostView(post: viewModel.feedPosts[index])
+        VStack {
+            Text("Reddit Feed")
+                .font(.system(size: 22).bold())
+            List {
+                ForEach(viewModel.feedPosts.indices, id: \.self) { index in
+                    PostView(post: viewModel.feedPosts[index])
+                }.onAppear(perform: {
+                    print("Cell Appeared")
+                })
+                .padding([.top])
             }
+            .padding([.bottom])
+            .onAppear(perform: {
+                viewModel.getPosts()
+            })
         }
-        .onAppear(perform: {
-            viewModel.getPosts()
-        })
+        .environmentObject(viewModel)
     }
+    
 }
 
 struct PostView: View {
+    @EnvironmentObject private var viewModel: FeedViewModel
     var post: Post
     var body: some View {
         VStack(alignment: .leading) {
             Text(post.title)
-                .font(.system(size: 20).bold())
+                .font(.system(size: 18).bold())
                 .padding([.leading])
-            Rectangle()
-                .frame(width: CGFloat(post.imageWidth ?? Int(UIScreen.main.bounds.width)), height: CGFloat(post.imageHeight ?? Int(UIScreen.main.bounds.height)), alignment: .center)
-                .aspectRatio(1, contentMode: .fit)
+                .lineLimit(10)
+            if post.imageURL.contains("http") {
+                Image(uiImage: post.imageURL.load())
+                    .resizable()
+                    .scaledToFit()
+            }
+            
             HStack {
                 HStack{
                     Text("Score")
@@ -51,9 +66,11 @@ struct PostView: View {
                 
                 Spacer()
             }
-            .padding([.leading,.trailing])
+            
         }
+        
     }
+   
     
 }
 

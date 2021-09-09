@@ -6,16 +6,20 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct NetworkManager {
+class NetworkManager {
     
-    let url = URL(string: "https://www.reddit.com/.json")
+    let baseURL = "https://www.reddit.com/.json"
+    var hasAnchor = false
     
-    
-    func fetchData(completion: @escaping (Result<[Post], Error>) -> ()) {
-        guard url != nil else { return }
+    func fetchData(with urlString: String?, completion: @escaping (Result<[Post], Error>) -> ()) {
+        if urlString != nil {
+            self.hasAnchor = true
+            
+        }
         
-        let request = URLRequest(url: url!)
+        let request = URLRequest(url: checkForAnchor(anchor: urlString))
         
         let task = URLSession.shared.dataTask(with: request) { data, respone , error in
             guard error == nil else {
@@ -30,6 +34,7 @@ struct NetworkManager {
                     let postData = try decoder.decode(PostData.self, from: safeData)
                     for child in postData.data.children {
                         posts.append(child.data)
+                        print(child.data.imageURL)
                     }
                     completion(.success(posts))
                                
@@ -40,8 +45,22 @@ struct NetworkManager {
             }
             
         }
-        .resume()
+        task.resume()
         
+    }
+    
+    func checkForAnchor(anchor: String?) -> URL {
+        if anchor == nil {
+            if let url = URL(string: baseURL) {
+                return url
+            }
+        } else {
+            if let url = URL(string: "\(baseURL)?after=\(anchor!)") {
+                return url
+            }
+            
+        }
+        return URL(string: "")!
     }
     
 }
