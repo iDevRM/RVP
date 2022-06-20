@@ -11,19 +11,19 @@ import SwiftUI
 
 class FeedViewModel: ObservableObject {
     
-    @Published var feedPosts = [Post]()
+    @Published var postFeed = [Post]()
     private let networkManager = NetworkManager()
     
     init() {
         getPosts()
     }
     
-    func getPosts() {
-        networkManager.fetchData(with: nil) { result in
+    private func getPosts() {
+        networkManager.fetchData() { result in
             switch result {
             case .success(let posts):
                 DispatchQueue.main.async {
-                    self.feedPosts = posts
+                    self.postFeed = posts
                 }
             case .failure(let error):
                 debugPrint(error.localizedDescription)
@@ -31,23 +31,19 @@ class FeedViewModel: ObservableObject {
         }
     }
     
-    func shouldLoadMorePosts(_ post: Post ) -> Bool  {
-        if let lastID = feedPosts.last?.id {
-            if post.id == lastID {
-                return true
-            } else {
-                return false
-            }
+    func postIsAnchor(_ post: Post ) -> Bool  {
+        if let lastID = postFeed.last?.id {
+            return lastID == post.id
         }
         return false
     }
     
-    func getPostsAfterAnchor(anchor: String) {
+    func getPostsAfter(anchor: String) {
         networkManager.fetchData(with: anchor) { result in
             switch result {
             case .success(let posts):
                 DispatchQueue.main.async {
-                    self.feedPosts += posts
+                    self.postFeed += posts
                 }
             case .failure(let error):
                 debugPrint(error.localizedDescription)

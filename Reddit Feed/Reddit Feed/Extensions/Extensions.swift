@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 extension String {
-    func load() -> UIImage {
+    func toImage() -> UIImage {
         do {
             guard let url = URL(string: self) else { return UIImage() }
             let data = try Data(contentsOf: url)

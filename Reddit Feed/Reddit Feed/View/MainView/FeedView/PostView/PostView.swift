@@ -13,10 +13,9 @@ struct PostView: View {
         VStack(alignment: .leading) {
             Text(post.title)
                 .font(.system(size: 18).bold())
-                .padding([.leading])
                 .lineLimit(10)
             if post.imageURL.contains("http") {
-                Image(uiImage: post.imageURL.load())
+                Image(uiImage: post.imageURL.toImage())
                     .resizable()
                     .scaledToFit()
             }
@@ -28,6 +27,7 @@ struct PostView: View {
                     
                     Text("\(post.score)")
                 }
+                
                 Spacer()
                 
                 HStack {

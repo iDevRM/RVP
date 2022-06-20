@@ -1,8 +1,8 @@
 //
-//  ContentView.swift
+//  FeedView.swift
 //  Reddit Feed
 //
-//  Created by Rick Martinez on 9/7/21.
+//  Created by Rick Martinez on 6/16/22.
 //
 
 import SwiftUI
@@ -15,22 +15,21 @@ struct FeedView: View {
             Text("Reddit Feed")
                 .font(.system(size: 22).bold())
             List {
-                ForEach(viewModel.feedPosts) { post in
+                ForEach(viewModel.postFeed) { post in
                     PostView(post: post)
-                        .padding([.bottom])
+                        .padding(.bottom)
                         .onAppear(perform: {
-                            if viewModel.shouldLoadMorePosts(post) {
-                                viewModel.getPostsAfterAnchor(anchor: post.name)
+                            if viewModel.postIsAnchor(post) {
+                                viewModel.getPostsAfter(anchor: post.name)
                             }
                         })
                 }
             }
         }
     }
-    
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
         FeedView()
     }

@@ -6,13 +6,12 @@
 //
 
 import Foundation
-import SwiftUI
 
 class NetworkManager {
     
     let baseURL = "https://www.reddit.com/.json"
     
-    func fetchData(with urlString: String?, completion: @escaping (Result<[Post], Error>) -> ()) {
+    func fetchData(with urlString: String? = nil, completion: @escaping (Result<[Post], Error>) -> ()) {
         
         let request = URLRequest(url: checkForAnchor(anchor: urlString))
         
@@ -21,10 +20,12 @@ class NetworkManager {
                 debugPrint(error.debugDescription)
                 return
             }
+            
             let decoder = JSONDecoder()
             
             if let safeData = data {
                 var posts = [Post]()
+                
                 do {
                     let postData = try decoder.decode(PostData.self, from: safeData)
                     for child in postData.data.children {
@@ -37,24 +38,13 @@ class NetworkManager {
                     debugPrint(error.localizedDescription)
                 }
             }
-            
         }
         task.resume()
-        
     }
     
-
     func checkForAnchor(anchor: String?) -> URL {
-        if anchor == nil {
-            if let url = URL(string: baseURL) {
-                return url
-            }
-        } else {
-            if let url = URL(string: "\(baseURL)?after=\(anchor!)") {
-                return url
-            }
-        }
-        return URL(string: "")!
+        let url = (anchor == nil ? baseURL : "\(baseURL)?after=\(anchor!)")
+        return URL(string: url)!
     }
     
 }
